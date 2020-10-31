@@ -5,9 +5,11 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-decoupled-document": "^12.3.0",
     "@ckeditor/ckeditor5-react": "^1.1.3",
+    "bootstrap": "^4.5.3",
     "ckeditor4-react": "^1.0.0-beta.2",
     "lodash": "^4.17.11",
     "react": "^16.8.6",
+    "react-bootstrap": "^1.4.0",
     "react-chips": "^0.8.0",
     "react-cropper": "^1.2.0",
     "react-data-table-component": "^1.7.2",
@@ -30,10 +32,11 @@
     "sweetalert2": "^8.13.6"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "x": "firebase deploy",
+    "s": "react-scripts start",
+    "b": "react-scripts build",
+    "t": "react-scripts test",
+    "e": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
