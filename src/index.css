@@ -101,3 +101,8 @@ h6 {
 .ck.ck-toolbar.ck-rounded-corners {
   width: 100%;
 }
+
+.container-fluid{
+  background-color: #232645;
+}
+

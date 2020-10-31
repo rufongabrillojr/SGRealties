@@ -1,17 +1,15 @@
 const styles = {
-  container: {
-    display: 'flex',
+  map: {},
+  menuAndListing: {
+    minHeight: '100vh',
   },
-  content: {
-    flex: 1,
+  logo:{
+    width: '30px',
+    height: '30px'
   },
-  console: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    minWidth: 500,
-    padding: 20,
-  },
+  menu: {},
+  listing: {},
+
 };
 
 export default styles;
