@@ -6,22 +6,18 @@ import { Image, Navbar } from 'react-bootstrap';
 import logo from '../assets/images/white-logo.png';
 import logoDark from '../assets/images/dark-logo.png';
 
-class Menu extends Component {
+class Line extends Component {
   componentWillMount() {
   }
 
   render() {
     return (
-      <Navbar>
-        <Navbar.Brand href="#" style={styles.link}>
-          <Image src={logoDark} style={styles.logo} fluid/> SG Realties
-        </Navbar.Brand>
-      </Navbar>
+      <div className='propsLine'></div>
     );
   }
 }
 
-export default Menu;
+export default Line;
 
 const styles = {
   logo:{

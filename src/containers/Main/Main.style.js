@@ -1,15 +1,18 @@
 const styles = {
-  map: {},
+  mapContainer: {
+    padding: '1rem',
+    overflow: 'hidden'
+  },
+  map: {
+    borderRadius: '1rem',
+  },
   menuAndListing: {
     minHeight: '100vh',
   },
-  logo:{
-    width: '30px',
-    height: '30px'
-  },
   menu: {},
-  listing: {},
+  listing: {
 
+  },
 };
 
 export default styles;
