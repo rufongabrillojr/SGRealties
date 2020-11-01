@@ -134,6 +134,7 @@ h6 {
 
 .propCard.card:hover{
   background-color: #ff000017;
+  cursor: pointer;
 }
 
 .propCard.card.active{

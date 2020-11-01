@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {isEqual} from 'lodash';
 
-import { Container, Row, Col, Image, Navbar, Card, Link } from 'react-bootstrap';
+import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 
 import Menu from '../../components/Menu';
 import Line from '../../components/Line';
@@ -20,6 +21,7 @@ class Main extends Component {
     this.state = {
       properties: [
         {
+          id: 0,
           name: 'Lorem ipsum dolor sit amet 1',
           price: {
             min: 2000000,
@@ -31,6 +33,7 @@ class Main extends Component {
           image: defaultPropsImage
         },
         {
+          id: 1,
           name: 'Lorem ipsum dolor sit amet 2',
           price: {
             min: 1000000,
@@ -42,6 +45,7 @@ class Main extends Component {
           image: defaultPropsImage
         },
         {
+          id: 2,
           name: 'Lorem ipsum dolor sit amet 3',
           price: {
             min: 1234567,
@@ -53,6 +57,7 @@ class Main extends Component {
           image: defaultPropsImage
         },
         {
+          id: 3,
           name: 'Lorem ipsum dolor sit amet 4',
           price: {
             min: 3293950,
@@ -64,6 +69,7 @@ class Main extends Component {
           image: defaultPropsImage
         },
         {
+          id: 4,
           name: 'Lorem ipsum dolor sit amet 5',
           price: {
             min: 1000000,
@@ -75,6 +81,7 @@ class Main extends Component {
           image: defaultPropsImage
         },
         {
+          id: 5,
           name: 'Lorem ipsum dolor sit amet 6',
           price: {
             min: 1000000,
@@ -85,33 +92,35 @@ class Main extends Component {
           long: 120.5305563,
           image: defaultPropsImage
         }
-      ]
+      ], 
+      activeProps: {}
     }
   }
 
   HandleDisplayList = (data) => {
     let {item, key} = data;
-    console.log(data);
-
+    let {activeProps} = this.state;
     let price = (item.price.max > 0) ? `P ${item.price.min} - P ${item.price.max}` : `P ${item.price.min}`;
 
     return(
-      <div className='prop' key={key}>
-        <Link />
-      <Card className='propCard'>
-        <Row noGutters>
-          <Col lg={4}><Card.Img variant="top" src={defaultPropsImage} /></Col>
-          <Col lg={8}>
-            <Card.Body>
-              <div className='propName'>{item.name}</div>
-              <div className='propDesc truncate'>{item.description} </div>
-              <div className='propPrice'>{price}</div>
-              {/* <div>{item.lat} {item.long}</div> */}
-            </Card.Body>
-          </Col>
-        </Row>
-      </Card>
-      <Line/>
+      <div className='prop' key={key} onClick={ () => {
+        this.setState({activeProps: {id: item.id, lat: item.lat, long: item.long}});
+        console.log('dd')}
+        }>
+        <Card className={`propCard ${ isEqual(activeProps.id, item.id) ? 'active': '' }`}>
+          <Row noGutters>
+            <Col lg={4}><Card.Img variant="top" src={defaultPropsImage} /></Col>
+            <Col lg={8}>
+              <Card.Body>
+                <div className='propName'>{item.name}</div>
+                <div className='propDesc truncate'>{item.description} </div>
+                <div className='propPrice'>{price}</div>
+                {/* <div>{item.lat} {item.long}</div> */}
+              </Card.Body>
+            </Col>
+          </Row>
+        </Card>
+        <Line />
       </div>
     )
   }
@@ -125,6 +134,8 @@ class Main extends Component {
   }
 
   render() {
+
+    console.log(this.state);
     return (
       <Container fluid>
         <Row>
