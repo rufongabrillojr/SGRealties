@@ -1,16 +1,17 @@
 const styles = {
-  container: {
-    display: 'flex',
+  mapContainer: {
+    padding: '1rem',
+    overflow: 'hidden'
   },
-  content: {
-    flex: 1,
+  map: {
+    borderRadius: '1rem',
   },
-  console: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    minWidth: 500,
-    padding: 20,
+  menuAndListing: {
+    minHeight: '100vh',
+  },
+  menu: {},
+  listing: {
+
   },
 };
 

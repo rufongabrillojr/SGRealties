@@ -101,3 +101,79 @@ h6 {
 .ck.ck-toolbar.ck-rounded-corners {
   width: 100%;
 }
+
+.container-fluid{
+  /* background-color: #232645; */
+}
+
+.propsListing{
+  height: 90vh;
+  overflow: scroll;
+}
+
+
+.propsListing div.prop:last-child .propsLine{
+  border: none;
+}
+
+.propsLine{
+  display: block;
+  margin: 1rem 0rem;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+}
+
+.propCard.card{
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  background-clip: border-box;
+  border: none;
+  border-radius: 1rem;
+}
+
+.propCard.card:hover{
+  background-color: #ff000017;
+  cursor: pointer;
+}
+
+.propCard.card.active{
+  background-color: #ff000030;
+}
+
+.propCard img{
+  display: inline-block;
+  /* width: 100px; */
+  border-radius: 1rem;
+  margin: 5px;
+}
+
+.propCard .card-body{
+  display: inline-block;
+  padding: 10px;
+}
+
+.propCard .card-body .propName{
+  font-size: 15px;
+  line-height: 15px;
+  font-weight: bold;
+}
+
+.propCard .card-body .propPrice{
+  font-size: 10px;
+  /* color: #ccc; */
+  text-align: right;
+  font-weight: bold;
+}
+
+.propCard .card-body .propDesc{
+  font-size: 10px;
+  color: #808080;
+}
+
+.truncate{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
