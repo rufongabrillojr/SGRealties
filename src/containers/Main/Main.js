@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {isEqual} from 'lodash';
-
+import GoogleMap from 'google-map-react';
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
-
 import Menu from '../../components/Menu';
 import Line from '../../components/Line';
-
 import styles from './Main.style';
-
-import googlemap from '../../assets/images/googlemap.jpg';
-import logo from '../../assets/images/white-logo.png';
 import defaultPropsImage from '../../assets/images/props.png'
+
+import key from '../../constants/key';
 
 class Main extends Component {
   constructor(props){
@@ -29,7 +25,7 @@ class Main extends Component {
           },
           description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           lat: 15.9603307,
-          long: 120.3856262,
+          lng: 120.3856262,
           image: defaultPropsImage
         },
         {
@@ -41,7 +37,7 @@ class Main extends Component {
           },
           description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           lat: 15.927525,
-          long: 120.3441483,
+          lng: 120.3441483,
           image: defaultPropsImage
         },
         {
@@ -53,7 +49,7 @@ class Main extends Component {
           },
           description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           lat: 15.782365,
-          long: 121.015441,
+          lng: 121.015441,
           image: defaultPropsImage
         },
         {
@@ -65,7 +61,7 @@ class Main extends Component {
           },
           description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           lat: 14.641009,
-          long: 121.001285,
+          lng: 121.001285,
           image: defaultPropsImage
         },
         {
@@ -77,7 +73,7 @@ class Main extends Component {
           },
           description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           lat: 16.4183969,
-          long: 120.6305563,
+          lng: 120.6305563,
           image: defaultPropsImage
         },
         {
@@ -89,25 +85,30 @@ class Main extends Component {
           },
           description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           lat: 16.5183969,
-          long: 120.5305563,
+          lng: 120.5305563,
           image: defaultPropsImage
         }
       ], 
-      activeProps: {}
+      activeProperty: {id: -0, lat: 14.5812853, lng: 120.9760781}
     }
+  }
+
+  componentDidMount = () => {
+    let {properties} = this.state;
+    this.setState({activeProperty: {id: properties[0].id, lat: properties[0].lat, lng: properties[0].lng}});
   }
 
   HandleDisplayList = (data) => {
     let {item, key} = data;
-    let {activeProps} = this.state;
+    let {activeProperty} = this.state;
     let price = (item.price.max > 0) ? `P ${item.price.min} - P ${item.price.max}` : `P ${item.price.min}`;
 
     return(
       <div className='prop' key={key} onClick={ () => {
-        this.setState({activeProps: {id: item.id, lat: item.lat, long: item.long}});
-        console.log('dd')}
-        }>
-        <Card className={`propCard ${ isEqual(activeProps.id, item.id) ? 'active': '' }`}>
+        this.setState({activeProperty: {id: item.id, lat: item.lat, lng: item.lng}});
+        }
+      }>
+        <Card className={`propCard ${ isEqual(activeProperty.id, item.id) ? 'active': '' }`}>
           <Row noGutters>
             <Col lg={4}><Card.Img variant="top" src={defaultPropsImage} /></Col>
             <Col lg={8}>
@@ -115,7 +116,7 @@ class Main extends Component {
                 <div className='propName'>{item.name}</div>
                 <div className='propDesc truncate'>{item.description} </div>
                 <div className='propPrice'>{price}</div>
-                {/* <div>{item.lat} {item.long}</div> */}
+                {/* <div>{item.lat} {item.lng}</div> */}
               </Card.Body>
             </Col>
           </Row>
@@ -134,7 +135,7 @@ class Main extends Component {
   }
 
   render() {
-
+    let {activeProperty} = this.state;
     console.log(this.state);
     return (
       <Container fluid>
@@ -150,7 +151,15 @@ class Main extends Component {
             </Row>
           </Col>
           <Col lg={9} style={styles.mapContainer}>
-            <Image src={googlemap} fluid style={styles.map}/>
+            <div style={styles.map}>
+              <GoogleMap
+                bootstrapURLKeys={{ key }}
+                defaultCenter={[activeProperty.lat, activeProperty.lng]}
+                defaultZoom={10}
+                yesIWantToUseGoogleMapApiInternals
+                onGoogleApiLoaded={({ map, maps }) => {console.log(map,maps)}}
+              ></GoogleMap>
+            </div>
           </Col>
         </Row>
       </Container>
