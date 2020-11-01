@@ -6,7 +6,8 @@ const styles = {
   map: {
     borderRadius: '1rem',
     height: '100%',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    border: '1px solid #fff'
   },
   menuAndListing: {
     minHeight: '100vh',

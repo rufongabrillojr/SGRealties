@@ -6,8 +6,9 @@ import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 import Menu from '../../components/Menu';
 import Line from '../../components/Line';
 import styles from './Main.style';
-import googlemap from '../../assets/images/googlemap.jpg';
 import defaultPropsImage from '../../assets/images/props.png'
+
+import key from '../../constants/key';
 
 class Main extends Component {
   constructor(props){
@@ -152,7 +153,7 @@ class Main extends Component {
           <Col lg={9} style={styles.mapContainer}>
             <div style={styles.map}>
               <GoogleMap
-                bootstrapURLKeys={{ key: 'AIzaSyAW--YNqKDQButqmt3lRtVktT0TtoRpD7s' }}
+                bootstrapURLKeys={{ key }}
                 defaultCenter={[activeProperty.lat, activeProperty.lng]}
                 defaultZoom={10}
                 yesIWantToUseGoogleMapApiInternals
