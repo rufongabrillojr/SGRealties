@@ -7,7 +7,7 @@ const styles = {
     borderRadius: '1rem',
     height: '100%',
     overflow: 'hidden',
-    border: '1px solid #fff'
+    border: '1px solid #fff',
   },
   menuAndListing: {
     minHeight: '100vh',
