@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {isEqual} from 'lodash';
+import {isEqual, isEmpty} from 'lodash';
 import GoogleMap from 'google-map-react';
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 import Menu from '../../components/Menu';
 import Marker from '../../components/Marker';
 import Line from '../../components/Line';
 import styles from './Main.style';
-import defaultPropsImage from '../../assets/images/props.png'
+import mapLoading from '../../assets/images/mapLoading.gif'
 
 import key from '../../constants/key';
 import list from './properties';
-
-import mapStyle from './mapStyle';
 
 class Main extends Component {
   constructor(props){
@@ -20,33 +18,36 @@ class Main extends Component {
 
     this.state = {
       properties: [], 
-      activeProperty: {id: -0, lat: 14.5812853, lng: 120.9760781}
+      activeProperty: {},
+      isMapLoaded: false,
+      showInfoPanel: false
     }
   }
 
   componentDidMount = () => {
-    this.setState({properties: list, activeProperty: {id: list[0].id, lat: list[0].lat, lng: list[0].lng}});
+    this.setState({properties: list, activeProperty: {id: -1, lat: 14.5810706, lng: 120.9753696, zoom: 8}});
   }
 
   HandleDisplayList = (data) => {
-    let {item, key} = data;
-    let {activeProperty} = this.state;
-    let price = (item.price.max > 0) ? `P ${item.price.min} - P ${item.price.max}` : `P ${item.price.min}`;
+    let {item, key} = data, 
+        {activeProperty} = this.state,
+        price = (!isEmpty(item.price.max)) ? `P ${item.price.min} - P ${item.price.max}` : `P ${item.price.min}`;
 
+    item = {...item, zoom: 10}
     return(
-      <div className='prop' key={key} onClick={ () => {
-        this.setState({activeProperty: {id: item.id, lat: item.lat, lng: item.lng}});
-        }
-      }>
+      <div className='prop' key={key} onClick={ () => this.setState({ activeProperty: item, showInfoPanel: true })}>
         <Card className={`propCard ${ isEqual(activeProperty.id, item.id) ? 'active': '' }`}>
           <Row noGutters>
-            <Col lg={4}><Card.Img variant="top" src={defaultPropsImage} /></Col>
+            <Col lg={4}>
+              <div className='propertyThumbnail'>
+                <Card.Img variant="top" src={item.image} />
+              </div>
+            </Col>
             <Col lg={8}>
               <Card.Body>
                 <div className='propName'>{item.name}</div>
                 <div className='propDesc truncate'>{item.description} </div>
                 <div className='propPrice'>{price}</div>
-                {/* <div>{item.lat} {item.lng}</div> */}
               </Card.Body>
             </Col>
           </Row>
@@ -56,8 +57,38 @@ class Main extends Component {
     )
   }
 
+  HandleDisplayPropertyInformation = () => {
+    let {activeProperty} = this.state;
+    console.log(activeProperty);
+    return (
+      <Row>
+        <div onClick={ () => this.setState({ showInfoPanel: false })}>Close</div>
+        <Col lg={12}>
+          <div className='propertyThumbnail' style={{width: '100%', height: 'unset'}}>
+            <Image src={activeProperty.image} style={{width: '100%'}}/>
+          </div>
+        </Col>
+        <Col lg={12}>
+          <h2>{activeProperty.name}</h2>
+          <p>{activeProperty.description}</p>
+        </Col>
+        <Col lg={12}>
+          Price here
+        </Col>
+        <Col lg={12}>
+          Iquire button here
+        </Col>
+        <Col lg={12}>
+          Contact form
+        </Col>
+      </Row>
+    ) 
+  }
+
   HandleListing = () => {
-    let {properties} = this.state, list = [];
+    let { properties } = this.state, 
+        list = [];
+
     properties.forEach( (item, key) => {
       list = [...list, this.HandleDisplayList({item, key})];
     } )
@@ -65,12 +96,11 @@ class Main extends Component {
   }
 
   HandlePins = () => {
-    let pins = [];
-    let {properties} = this.state;
+    let { properties } = this.state, 
+        pins = [];
 
     properties.forEach((pin, key) => {
       let {lat, lng} = pin;
-      console.log(pin);
       pins = [...pins, <Marker key={key} lat={lat} lng={lng} data={pin} />];
     });
 
@@ -78,7 +108,7 @@ class Main extends Component {
   }
 
   render() {
-    let {activeProperty} = this.state;
+    let {activeProperty, isMapLoaded, showInfoPanel} = this.state;
 
     return (
       <Container fluid>
@@ -93,16 +123,23 @@ class Main extends Component {
               </Col>
             </Row>
           </Col>
-          <Col lg={9} style={styles.mapContainer}>
+          {showInfoPanel && (
+            <Col lg={3} style={styles.propertyInformation}>
+              {this.HandleDisplayPropertyInformation()}
+            </Col>
+          )}
+
+          <Col style={styles.mapContainer}>
             <div style={styles.map}>
+              {!isMapLoaded && <Image src={mapLoading} style={styles.mapLoading} fluid />}
               <GoogleMap
-                google={this.props.google}
-                style={mapStyle}
                 bootstrapURLKeys={{ key }}
-                defaultCenter={[activeProperty.lat, activeProperty.lng]}
-                defaultZoom={10}
+                center={[activeProperty.lat, activeProperty.lng]}
+                zoom={activeProperty.zoom}
                 yesIWantToUseGoogleMapApiInternals
-                onGoogleApiLoaded={({ map, maps }) => {console.log(map,maps)}}
+                onGoogleApiLoaded={({ map, maps }) => { 
+                  this.setState({isMapLoaded: true})
+                }}
               >
                 {this.HandlePins()}
               </GoogleMap>
