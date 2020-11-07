@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "sgrealties-a2b77"
+  },
+  "targets": {
+    "sgrealties-a2b77": {
+      "hosting": {
+        "staging-sgrealties": [
+          "staging-sgrealties.web.app"
+        ]
+      }
+    }
   }
 }

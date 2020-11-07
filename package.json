@@ -32,7 +32,8 @@
     "styled-components": "^4.3.2",
     "sweetalert2": "^8.13.6"
   },
-  "scripts": {
+  "scripts": { 
+    "x-s": "firebase hosting:channel:deploy staging",
     "x": "firebase deploy",
     "s": "react-scripts start",
     "b": "react-scripts build",

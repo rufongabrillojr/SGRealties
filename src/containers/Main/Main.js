@@ -1,122 +1,53 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {isEqual} from 'lodash';
+import {isEqual, isEmpty} from 'lodash';
 import GoogleMap from 'google-map-react';
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 import Menu from '../../components/Menu';
+import Marker from '../../components/Marker';
 import Line from '../../components/Line';
 import styles from './Main.style';
-import defaultPropsImage from '../../assets/images/props.png'
+import mapLoading from '../../assets/images/mapLoading.gif'
 
 import key from '../../constants/key';
+import list from './properties';
 
 class Main extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-      properties: [
-        {
-          id: 0,
-          name: 'Lorem ipsum dolor sit amet 1',
-          price: {
-            min: 2000000,
-            max: 2500000
-          },
-          description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          lat: 15.9603307,
-          lng: 120.3856262,
-          image: defaultPropsImage
-        },
-        {
-          id: 1,
-          name: 'Lorem ipsum dolor sit amet 2',
-          price: {
-            min: 1000000,
-            max: 1500000
-          },
-          description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          lat: 15.927525,
-          lng: 120.3441483,
-          image: defaultPropsImage
-        },
-        {
-          id: 2,
-          name: 'Lorem ipsum dolor sit amet 3',
-          price: {
-            min: 1234567,
-            max: 1345678
-          },
-          description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          lat: 15.782365,
-          lng: 121.015441,
-          image: defaultPropsImage
-        },
-        {
-          id: 3,
-          name: 'Lorem ipsum dolor sit amet 4',
-          price: {
-            min: 3293950,
-            max: 3340593
-          },
-          description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          lat: 14.641009,
-          lng: 121.001285,
-          image: defaultPropsImage
-        },
-        {
-          id: 4,
-          name: 'Lorem ipsum dolor sit amet 5',
-          price: {
-            min: 1000000,
-            max: 0
-          },
-          description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          lat: 16.4183969,
-          lng: 120.6305563,
-          image: defaultPropsImage
-        },
-        {
-          id: 5,
-          name: 'Lorem ipsum dolor sit amet 6',
-          price: {
-            min: 1000000,
-            max: 0
-          },
-          description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          lat: 16.5183969,
-          lng: 120.5305563,
-          image: defaultPropsImage
-        }
-      ], 
-      activeProperty: {id: -0, lat: 14.5812853, lng: 120.9760781}
+      properties: [], 
+      activeProperty: {},
+      isMapLoaded: false,
+      showInfoPanel: false
     }
   }
 
   componentDidMount = () => {
-    let {properties} = this.state;
-    this.setState({activeProperty: {id: properties[0].id, lat: properties[0].lat, lng: properties[0].lng}});
+    this.setState({properties: list, activeProperty: {id: -1, lat: 14.5810706, lng: 120.9753696, zoom: 8}});
   }
 
   HandleDisplayList = (data) => {
-    let {item, key} = data;
-    let {activeProperty} = this.state;
-    let price = (item.price.max > 0) ? `P ${item.price.min} - P ${item.price.max}` : `P ${item.price.min}`;
+    let {item, key} = data, 
+        {activeProperty} = this.state,
+        price = (!isEmpty(item.price.max)) ? `P ${item.price.min} - P ${item.price.max}` : `P ${item.price.min}`;
 
+    item = {...item, zoom: 10}
     return(
-      <div className='prop' key={key} onClick={ () => {
-        this.setState({activeProperty: {id: item.id, lat: item.lat, lng: item.lng}});
-        }
-      }>
+      <div className='prop' key={key} onClick={ () => this.setState({ activeProperty: item, showInfoPanel: true })}>
         <Card className={`propCard ${ isEqual(activeProperty.id, item.id) ? 'active': '' }`}>
           <Row noGutters>
-            <Col lg={4}><Card.Img variant="top" src={defaultPropsImage} /></Col>
+            <Col lg={4}>
+              <div className='propertyThumbnail'>
+                <Card.Img variant="top" src={item.image} />
+              </div>
+            </Col>
             <Col lg={8}>
               <Card.Body>
                 <div className='propName'>{item.name}</div>
                 <div className='propDesc truncate'>{item.description} </div>
                 <div className='propPrice'>{price}</div>
-                {/* <div>{item.lat} {item.lng}</div> */}
               </Card.Body>
             </Col>
           </Row>
@@ -126,17 +57,59 @@ class Main extends Component {
     )
   }
 
-  HandleDisplayListing = () => {
-    let {properties} = this.state, list = [];
+  HandleDisplayPropertyInformation = () => {
+    let {activeProperty} = this.state;
+    console.log(activeProperty);
+    return (
+      <Row>
+        <div onClick={ () => this.setState({ showInfoPanel: false })}>Close</div>
+        <Col lg={12}>
+          <div className='propertyThumbnail' style={{width: '100%', height: 'unset'}}>
+            <Image src={activeProperty.image} style={{width: '100%'}}/>
+          </div>
+        </Col>
+        <Col lg={12}>
+          <h2>{activeProperty.name}</h2>
+          <p>{activeProperty.description}</p>
+        </Col>
+        <Col lg={12}>
+          Price here
+        </Col>
+        <Col lg={12}>
+          Iquire button here
+        </Col>
+        <Col lg={12}>
+          Contact form
+        </Col>
+      </Row>
+    ) 
+  }
+
+  HandleListing = () => {
+    let { properties } = this.state, 
+        list = [];
+
     properties.forEach( (item, key) => {
       list = [...list, this.HandleDisplayList({item, key})];
     } )
     return list;
   }
 
+  HandlePins = () => {
+    let { properties } = this.state, 
+        pins = [];
+
+    properties.forEach((pin, key) => {
+      let {lat, lng} = pin;
+      pins = [...pins, <Marker key={key} lat={lat} lng={lng} data={pin} />];
+    });
+
+    return pins;
+  }
+
   render() {
-    let {activeProperty} = this.state;
-    console.log(this.state);
+    let {activeProperty, isMapLoaded, showInfoPanel} = this.state;
+
     return (
       <Container fluid>
         <Row>
@@ -146,19 +119,30 @@ class Main extends Component {
                 <Menu />
               </Col>
               <Col lg={12} className='propsListing'>
-                {this.HandleDisplayListing()}
+                {this.HandleListing()}
               </Col>
             </Row>
           </Col>
-          <Col lg={9} style={styles.mapContainer}>
+          {showInfoPanel && (
+            <Col lg={3} style={styles.propertyInformation}>
+              {this.HandleDisplayPropertyInformation()}
+            </Col>
+          )}
+
+          <Col style={styles.mapContainer}>
             <div style={styles.map}>
+              {!isMapLoaded && <Image src={mapLoading} style={styles.mapLoading} fluid />}
               <GoogleMap
                 bootstrapURLKeys={{ key }}
-                defaultCenter={[activeProperty.lat, activeProperty.lng]}
-                defaultZoom={10}
+                center={[activeProperty.lat, activeProperty.lng]}
+                zoom={activeProperty.zoom}
                 yesIWantToUseGoogleMapApiInternals
-                onGoogleApiLoaded={({ map, maps }) => {console.log(map,maps)}}
-              ></GoogleMap>
+                onGoogleApiLoaded={({ map, maps }) => { 
+                  this.setState({isMapLoaded: true})
+                }}
+              >
+                {this.HandlePins()}
+              </GoogleMap>
             </div>
           </Col>
         </Row>
