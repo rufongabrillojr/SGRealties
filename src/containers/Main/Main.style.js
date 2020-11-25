@@ -17,8 +17,9 @@ const styles = {
     minHeight: '100vh',
   },
   propertyInformation: {
-    minHeight: '100vh',
-    marginTop: '60px'
+    minHeight: 'inherit',
+    marginTop: '60px',
+    padding: '1rem',
   },
   propertyInfoImage: {
     width: '100%'

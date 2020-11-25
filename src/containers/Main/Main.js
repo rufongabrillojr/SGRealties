@@ -123,11 +123,9 @@ class Main extends Component {
               </Col>
             </Row>
           </Col>
-          {showInfoPanel && (
-            <Col lg={3} style={styles.propertyInformation}>
-              {this.HandleDisplayPropertyInformation()}
-            </Col>
-          )}
+          <Col lg={3} style={styles.propertyInformation, {'display': showInfoPanel ? 'block': 'none'}}>
+            {this.HandleDisplayPropertyInformation()}
+          </Col>
 
           <Col style={styles.mapContainer}>
             <div style={styles.map}>
