@@ -15,9 +15,9 @@ const styles = {
   },
   menuAndListing: {
     minHeight: '100vh',
+    overflowY: 'hidden'
   },
   propertyInformation: {
-    minHeight: '100vh',
     marginTop: '60px'
   },
   propertyInfoImage: {

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { useRef, Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {isEqual, isEmpty} from 'lodash';
 import GoogleMap from 'google-map-react';
-import { Container, Row, Col, Image, Card } from 'react-bootstrap';
+import { Container, Row, Col, Image, Card, Button, Carousel } from 'react-bootstrap';
 import Menu from '../../components/Menu';
 import Marker from '../../components/Marker';
 import Line from '../../components/Line';
@@ -26,6 +26,7 @@ class Main extends Component {
 
   componentDidMount = () => {
     this.setState({properties: list, activeProperty: {id: -1, lat: 14.5810706, lng: 120.9753696, zoom: 8}});
+    
   }
 
   HandleDisplayList = (data) => {
@@ -40,14 +41,14 @@ class Main extends Component {
           <Row noGutters>
             <Col lg={4}>
               <div className='propertyThumbnail'>
-                <Card.Img variant="top" src={item.image} />
+              <Card.Img variant="top" src={item.image} />
               </div>
             </Col>
             <Col lg={8}>
               <Card.Body>
                 <div className='propName'>{item.name}</div>
                 <div className='propDesc truncate'>{item.description} </div>
-                <div className='propPrice'>{price}</div>
+                {/* <div className='propPrice'>{price}</div> */}
               </Card.Body>
             </Col>
           </Row>
@@ -59,13 +60,18 @@ class Main extends Component {
 
   HandleDisplayPropertyInformation = () => {
     let {activeProperty} = this.state;
-    console.log(activeProperty);
     return (
       <Row>
-        <div onClick={ () => this.setState({ showInfoPanel: false })}>Close</div>
+        <Col lg={12}>
+          <Button variant="link" size="sm" style={{margin: '5px'}}  onClick={ () => this.setState({ showInfoPanel: false })}> Close </Button>
+        </Col>
         <Col lg={12}>
           <div className='propertyThumbnail' style={{width: '100%', height: 'unset'}}>
-            <Image src={activeProperty.image} style={{width: '100%'}}/>
+            <Carousel>
+              <Carousel.Item><Image src={activeProperty.image} style={{width: '100%'}}/></Carousel.Item>
+              <Carousel.Item><Image src={activeProperty.image} style={{width: '100%'}}/></Carousel.Item>
+              <Carousel.Item><Image src={activeProperty.image} style={{width: '100%'}}/></Carousel.Item>
+            </Carousel>
           </div>
         </Col>
         <Col lg={12}>
@@ -118,18 +124,18 @@ class Main extends Component {
               <Col lg={12}>
                 <Menu />
               </Col>
-              <Col lg={12} className='propsListing'>
+              <Col lg={12} className='propsListing' > 
                 {this.HandleListing()}
               </Col>
             </Row>
           </Col>
           {showInfoPanel && (
-            <Col lg={3} style={styles.propertyInformation}>
+            <Col lg={6} style={styles.propertyInformation} className='propsInformation'>
               {this.HandleDisplayPropertyInformation()}
             </Col>
           )}
 
-          <Col style={styles.mapContainer}>
+          {/* <Col style={styles.mapContainer}>
             <div style={styles.map}>
               {!isMapLoaded && <Image src={mapLoading} style={styles.mapLoading} fluid />}
               <GoogleMap
@@ -144,7 +150,7 @@ class Main extends Component {
                 {this.HandlePins()}
               </GoogleMap>
             </div>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     );
