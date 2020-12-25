@@ -1,3 +1,34 @@
+@keyframes listingScrollAnimation {
+  from {
+    background: #00000000 !important;
+  }
+  to {
+    background: #ccc !important;
+  }
+}
+
+/* customizing scroll bar */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -60,60 +91,61 @@ h6 {
   background-color: pink;
 }
 
-.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
-  border: 1px solid#BEBEBE;
-  height: 320px;
-  width: 575px;
-}
-
-.ck.ck-toolbar.ck-rounded-corners {
-  width: 100%;
-}
-
-.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
-  border: 1px solid#BEBEBE;
-  height: 320px;
-  width: 100%;
-}
-
-.ck.ck-toolbar.ck-rounded-corners {
-  width: 100%;
-}
-
-.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
-  border: 1px solid#BEBEBE;
-  height: 320px;
-  width: 100%;
-  margin-bottom: 30px;
-}
-
-.ck.ck-toolbar.ck-rounded-corners {
-  margin-top: 30px;
-  width: 96.9%;
-}
-
-.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
-  border: 1px solid#BEBEBE;
-  height: 420px;
-  width: 96.9%;
-}
-
-.ck.ck-toolbar.ck-rounded-corners {
-  width: 100%;
-}
-
 .container-fluid{
   /* background-color: #232645; */
 }
 
-.propsListing{
+.propsListing, .propsInformation{
   height: 90vh;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
+.propsListing:hover{
+  /* animation: listingScrollAnimation forwards; */
+  /* animation-duration: 2s; */
+}
+
+.propsListing::-webkit-scrollbar-track, .propsInformation::-webkit-scrollbar-track {
+  background: #00000000 !important; 
+}
+
+.propsListing::-webkit-scrollbar-thumb, .propsInformation::-webkit-scrollbar-thumb {
+  background: #00000000 !important; 
+}
+
+.propsListing:hover::-webkit-scrollbar-thumb, .propsInformation:hover::-webkit-scrollbar-thumb {
+  background: #333 !important;
+  animation: fadeIn 1s ease-in-out 3s;
+  animation-fill-mode: forwards;  
+}
 
 .propsListing div.prop:last-child .propsLine{
   border: none;
+}
+
+.propsListing::before{
+  content: " ";
+  display: block;
+  height: 100px;
+  position: sticky;
+  top: 0px;
+  height: 50px;
+  width: inherit;
+  z-index: 99;
+  background: #ffffff;
+  background: linear-gradient(180deg, #ffffff 0%, #00000000 100%);
+}
+.propsListing::after{
+  content: " ";
+  display: block;
+  height: 100px;
+  position: sticky;
+  bottom: 0px;
+  height: 50px;
+  width: inherit;
+  z-index: 99;
+  background: #ffffff;
+  background: linear-gradient(180deg, #00000000 0%, #ffffff 100%);
 }
 
 .propsLine{
@@ -146,7 +178,7 @@ h6 {
   height: 100px;
   width: 100px;
   border-radius: 1rem;
-  margin: 5px;
+  margin: 5px 5px 0px 5px;
   overflow: hidden;
 }
 
