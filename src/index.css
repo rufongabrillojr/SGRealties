@@ -10,7 +10,7 @@
 /* customizing scroll bar */
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 /* Track */
@@ -70,7 +70,7 @@ button {
 
 p {
   margin: 0;
-  line-height: 15px;
+  /* line-height: 15px; */
 }
 
 h1,
@@ -93,6 +93,7 @@ h6 {
 
 .container-fluid{
   /* background-color: #232645; */
+  max-width: 1024px;
 }
 
 .propsListing, .propsInformation{
@@ -136,7 +137,7 @@ h6 {
   background: linear-gradient(180deg, #ffffff 0%, #00000000 100%);
 }
 .propsListing::after{
-  content: " ";
+  /* content: " "; */
   display: block;
   height: 100px;
   position: sticky;
@@ -176,7 +177,7 @@ h6 {
 .propertyThumbnail{
   display: inline-block;
   height: 100px;
-  width: 100px;
+  width: inherit;
   border-radius: 1rem;
   margin: 5px 5px 0px 5px;
   overflow: hidden;
@@ -194,7 +195,7 @@ h6 {
 
 .propCard .card-body .propName{
   font-size: 15px;
-  line-height: 15px;
+  line-height: 20px;
   font-weight: bold;
 }
 
@@ -215,4 +216,47 @@ h6 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.contact-form{
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.horizontal-line{
+  height: 1px;
+  background: #e4e4e4;
+  margin: 20px 0px;
+}
+
+.testimonial-image{
+  width: 100px;
+  height: 100px;
+}
+
+.listingDescription{
+  position: relative;
+  left: -50px;
+  /* top: 50%; */
+  display: block;
+  /* transform: translateY(50%); */
+  text-shadow: 0px 0px 20px white;
+  font-family: initial;
+}
+.listingDescription h2{
+  font-style: italic;
+}
+
+.propsListing .swiper-slide img{
+  position: absolute;
+  top: 0;
+}
+
+.swiper-cube-shadow{
+  display: none;
+}
+
+.swiperController{
+  
 }

@@ -9,6 +9,7 @@
     "ckeditor4-react": "^1.0.0-beta.2",
     "google-map-react": "^2.1.8",
     "lodash": "^4.17.11",
+    "node-sass": "4.14.1",
     "react": "^16.8.6",
     "react-bootstrap": "^1.4.0",
     "react-chips": "^0.8.0",
@@ -30,9 +31,10 @@
     "redux-persist": "^5.10.0",
     "redux-saga": "^1.0.2",
     "styled-components": "^4.3.2",
-    "sweetalert2": "^8.13.6"
+    "sweetalert2": "^8.13.6",
+    "swiper": "^6.4.11"
   },
-  "scripts": { 
+  "scripts": {
     "x-s": "firebase hosting:channel:deploy staging",
     "x": "firebase deploy",
     "s": "react-scripts start",
