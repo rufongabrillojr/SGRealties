@@ -91,9 +91,16 @@ h6 {
   background-color: pink;
 }
 
-.container-fluid{
-  /* background-color: #232645; */
-  max-width: 1024px;
+.content{
+  max-width: 1024px !important;
+  margin: 0 auto;
+}
+
+.banner{
+  background-color: #232645;
+  padding-bottom: 50px;
+  background: url('./assets/images/googlemap.jpg') no-repeat;
+  background-size: cover;
 }
 
 .propsListing, .propsInformation{
@@ -236,16 +243,18 @@ h6 {
 }
 
 .listingDescription{
-  position: relative;
   left: -50px;
-  /* top: 50%; */
-  display: block;
-  /* transform: translateY(50%); */
-  text-shadow: 0px 0px 20px white;
   font-family: initial;
+  position: relative;
+  background: inherit;
+  overflow: hidden;
+  background: #fff;
+  padding: 5px;
 }
+
 .listingDescription h2{
   font-style: italic;
+  font-size: 20px;
 }
 
 .propsListing .swiper-slide img{
@@ -259,4 +268,64 @@ h6 {
 
 .swiperController{
   
+}
+
+.swiper-button-prev, .swiper-button-next {
+  display: inline-block;
+  position: relative;
+      /* float: right; */
+  transform: translateY(100%);
+  z-index: 9;
+}
+
+.swiper-button-prev::after, .swiper-button-next::after{
+  content: " ";
+  display: block;
+  height: 50px;
+  width: 50px;
+  background-size: contain  !important;
+  background: url('assets/images/chevron-left.svg') no-repeat;
+}
+
+.swiper-button-prev::after{
+  background: url('assets/images/chevron-left.svg') no-repeat;
+}
+
+.swiper-button-next::after{
+  background: url('assets/images/chevron-right.svg') no-repeat;
+}
+
+.swiper-button-prev:active, .swiper-button-next:active {
+  filter: invert(1);
+  background: #fff;
+}
+
+button{
+  border-radius: unset !important;
+  background: #000 !important;
+  border: transparent !important;
+}
+
+.swiper-slide{
+  width: 100%  !important;
+}
+
+.count{
+  float: right;
+  background: #fff !important;
+  color: #000 !important;
+}
+
+
+.listingDescription .btn::after{
+  content: " ";
+  background: url(/static/media/arrow-right-short.9f81b0bb.svg) no-repeat;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  filter: invert(1);
+  top: 50%;
+  position: relative;
+  float: right;
 }

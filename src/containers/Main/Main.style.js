@@ -14,7 +14,7 @@ const styles = {
     display: 'block'
   },
   menuAndListing: {
-    minHeight: '100vh',
+    // minHeight: '100vh',
     overflowY: 'hidden'
   },
   propertyInformation: {
